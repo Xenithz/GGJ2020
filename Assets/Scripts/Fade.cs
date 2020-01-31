@@ -18,15 +18,28 @@ public class Fade : MonoBehaviour
 
         
     }
-    public void FadeIn(float speed)
+    public void FadeIn(float speed, float delay)
     {
-        animator.SetTrigger("FadeIn");
+        StartCoroutine(FadeInRoutine(speed, delay));
     }
 
-    public void FadeOut(float speed)
+    public void FadeOut(float speed, float delay)
     {
-        animator.SetTrigger("FadeOut");
+        StartCoroutine(FadeOutRoutine(speed, delay));
 
+    }
+    public IEnumerator FadeInRoutine(float speed, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        animator.SetTrigger("FadeIn");
+        animator.speed = speed;
+    }
+
+    public IEnumerator FadeOutRoutine(float speed, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        animator.SetTrigger("FadeOut");
+        animator.speed = speed;
     }
 
 }

@@ -86,7 +86,7 @@ public class PlayerMovement : MonoBehaviour
             isWalking = true;
         }
 
-        rb.velocity += new Vector3(xAxis, yAxis, 0f) * accelerationSpeed;
+        rb.velocity += new Vector3(xAxis, 0f, 0f) * accelerationSpeed;
         rb.velocity = new Vector3(Mathf.Clamp(rb.velocity.x, -maxSpeed, maxSpeed), rb.velocity.y, rb.velocity.z);
     }
 
@@ -110,7 +110,8 @@ public class PlayerMovement : MonoBehaviour
         if (isGrounded)
         {
             animator.SetTrigger("Jump");
-            rb.AddForce(new Vector3(jumpForce.x, jumpForce.y, 0f), ForceMode.Impulse);
+            //rb.AddForce(new Vector3(jumpForce.x, jumpForce.y, 0f), ForceMode.Impulse);
+            rb.velocity += new Vector3(jumpForce.x, jumpForce.y, 0f);
             Debug.Log("Jump");
         }
     }

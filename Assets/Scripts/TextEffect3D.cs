@@ -88,8 +88,7 @@ public class TextEffect3D : MonoBehaviour
             yield return null;
         }
         routine = null;
-
-
+        Destroy(gameObject);
     }
     private IEnumerator PerCharacterFadeOutRoutine()
     {
@@ -112,7 +111,7 @@ public class TextEffect3D : MonoBehaviour
 
         }
         routine = null;
-
+        Destroy(gameObject);
 
     }
     private IEnumerator PerCharacterFadeInRoutine()
@@ -140,29 +139,22 @@ public class TextEffect3D : MonoBehaviour
 
     }
 
-    private void Update()
-    {
-        if(isGrounded && onGroundCollisionFade)
-        {
-            for (int i = 0; i < renderers.Length; i++)
-            {
-                Color color = renderers[i].material.color;
-
-                //if (color.a <= 0f)
-                //    Destroy(gameObject);
-            }
-        }    
-    }
-
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
             foreach (Collider col in colliders)
             {
+                Rigidbody rb = col.GetComponent<Rigidbody>();
                 col.enabled = true;
-                col.GetComponent<Rigidbody>().AddForce(new Vector3(Random.Range(-20, 20), Random.Range(0f, 4f), 0f), ForceMode.Impulse);
+                rb.constraints = RigidbodyConstraints.None;
+                rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY;
+                Vector3 randomRange = Random.insideUnitSphere * 15f;
+                randomRange.y = randomRange.y < 0 ? -randomRange.y : randomRange.y;
+                randomRange.y *= 0.4f;
+                rb.AddForce(randomRange, ForceMode.Impulse);
             }
+
             GetComponent<Collider>().enabled = false;
 
             NormalFadeOut();
