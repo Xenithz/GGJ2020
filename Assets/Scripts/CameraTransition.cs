@@ -7,28 +7,7 @@ public class CameraTransition : MonoBehaviour
     [SerializeField] private CinemachineFreeLook cinemachineFreeCam;
     [SerializeField] private GameObject front;
     [SerializeField] private float timeToLerp = 4f;
-
-
-    // Update is called once per frame
-    private void Update()
-    {
-        // if (Input.GetKeyDown(KeyCode.A))
-        // {
-        //     StartCoroutine(SideView());
-        // }
-        // else if (Input.GetKeyDown(KeyCode.S))
-        // {
-        //     StartCoroutine(TopView());
-        // }
-        // else if (Input.GetKeyDown(KeyCode.D))
-        // {
-        //     StartCoroutine(ThirdPersonView());
-        // }
-        // else if (Input.GetKeyDown(KeyCode.F))
-        // {
-        //     StartCoroutine(FirstPersonView());
-        // }
-    }
+    
 
 
     public IEnumerator TopView()
@@ -79,7 +58,7 @@ public class CameraTransition : MonoBehaviour
         float endValueY = 0.5f;
         float endValueX = 0f;
 
-        float midRigEndRadius = 35f;
+        float midRigEndRadius = 120f;
         float endMidHeight = 0;
 
         float topRigEndRadius = 1.3f;
