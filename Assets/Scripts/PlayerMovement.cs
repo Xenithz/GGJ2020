@@ -73,6 +73,8 @@ public class PlayerMovement : MonoBehaviour
 
     void Move2D()
     {
+        //rb.constraints = RigidbodyConstraints.FreezePositionZ;
+
         if (xAxis == 0)
         {
             Vector3 finaVelocity;
@@ -86,12 +88,14 @@ public class PlayerMovement : MonoBehaviour
             isWalking = true;
         }
 
-        rb.velocity += new Vector3(xAxis, yAxis, 0f) * accelerationSpeed;
+        rb.velocity += new Vector3(xAxis, 0f, 0f) * accelerationSpeed;
         rb.velocity = new Vector3( Mathf.Clamp(rb.velocity.x, -maxSpeed,maxSpeed),rb.velocity.y,rb.velocity.z);
     }
 
     void MoveTopDown()
     {
+        rb.constraints = RigidbodyConstraints.None;
+
         if (xAxis == 0 || yAxis == 0)
         {
             Vector3 finaVelocity;
@@ -113,7 +117,9 @@ public class PlayerMovement : MonoBehaviour
         if(isGrounded)
         {
             animator.SetTrigger("Jump");
-            rb.AddForce(new Vector3(jumpForce.x, jumpForce.y, 0f), ForceMode.Impulse);
+            //rb.AddForce(new Vector3(jumpForce.x, jumpForce.y, 0f), ForceMode.Impulse);
+            rb.velocity += new Vector3(jumpForce.x, jumpForce.y, 0f);
+
             Debug.Log("Jump");
         }
     }

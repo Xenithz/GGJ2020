@@ -14,17 +14,14 @@ public class ProblemGenerator : MonoBehaviour
     {
         if(problemTriggered)
         {
-            // Spawn
-            if(Time.time > timeLastSpawned + timeBetweenPatterns)
+            if (waveIndex > problemPatterns.Count - 1)
+                problemTriggered = false;
+            if (Time.time > timeLastSpawned + timeBetweenPatterns)
             {
                 problemPatterns[waveIndex].SetActive(true);
                 timeLastSpawned = Time.time;
                 waveIndex++;
             }
-            if (waveIndex > problemPatterns.Count - 1)
-                problemTriggered = false;
-
-
         }
     }
     private void OnTriggerEnter(Collider other)

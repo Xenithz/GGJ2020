@@ -4,13 +4,19 @@ using UnityEngine;
 
 public class TextEffect3D : MonoBehaviour
 {
-    [SerializeField]private MeshRenderer[] renderers;
+    [SerializeField] private MeshRenderer[] renderers;
     [SerializeField] private Material textMat;
     [SerializeField] private float normalFadeTime;
     [SerializeField] private float perCharacterFadeTime;
+    [SerializeField] private bool onGroundCollisionFade = true;
     private Coroutine routine;
+    [SerializeField] private List<Collider> colliders;
+    private bool isGrounded = false;
     private void Start()
     {
+        foreach(MeshRenderer rend in renderers)
+            colliders.Add(rend.GetComponent<Collider>());
+
         for (int i = 0; i < renderers.Length; i++)
         {
             Material newMat = new Material(textMat);
@@ -132,6 +138,44 @@ public class TextEffect3D : MonoBehaviour
         }
         routine = null;
 
+    }
+
+    private void Update()
+    {
+        if(isGrounded && onGroundCollisionFade)
+        {
+            for (int i = 0; i < renderers.Length; i++)
+            {
+                Color color = renderers[i].material.color;
+
+                //if (color.a <= 0f)
+                //    Destroy(gameObject);
+            }
+        }    
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        {
+            foreach (Collider col in colliders)
+            {
+                col.enabled = true;
+                col.GetComponent<Rigidbody>().AddForce(new Vector3(Random.Range(-20, 20), Random.Range(0f, 4f), 0f), ForceMode.Impulse);
+            }
+            GetComponent<Collider>().enabled = false;
+
+            NormalFadeOut();
+        }
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        {
+            isGrounded = true;
+        }
     }
 
 }
