@@ -1,0 +1,7 @@
+Animaation Breakdowns:
+
+8- 36 WALK 
+50-72 HOP
+75-107 JUMP
+110- 140 LANDING
+145-194 IDLE
