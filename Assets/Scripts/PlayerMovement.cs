@@ -103,9 +103,6 @@ public class PlayerMovement : MonoBehaviour
 
         rb.velocity += new Vector3(xAxis, 0f, yAxis) * accelerationSpeed;
         rb.velocity = new Vector3(Mathf.Clamp(rb.velocity.x, -maxSpeed, maxSpeed), rb.velocity.y, Mathf.Clamp(rb.velocity.z, -maxSpeed, maxSpeed));
-
-        Debug.Log("VEL: " + rb.velocity);
-
     }
 
     void Jump()

@@ -27,6 +27,14 @@ public class GameManager : MonoBehaviour
         {
             SceneManager.LoadScene(0);
         }
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            Fade.instance.FadeIn(1f);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            Fade.instance.FadeOut(1f);
+        }
     }
 
     void SpawnPlayer()
