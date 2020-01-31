@@ -24,7 +24,7 @@ public class PlayerMovement : MonoBehaviour
     private bool jump;
     private bool isGrounded;
     private bool landed = false;
-
+    public Vector2 currentDirection;
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -44,6 +44,8 @@ public class PlayerMovement : MonoBehaviour
         rb.velocity = newVelocity;
     }
 
+    
+
     private void Update()
     {
         //Debug.DrawRay(groundChecker.position, Vector3.down * groundRaycastDistance, Color.red, 0.3f);
@@ -59,6 +61,9 @@ public class PlayerMovement : MonoBehaviour
 
         xAxis = Input.GetAxisRaw("Horizontal");
         yAxis = Input.GetAxisRaw("Vertical");
+        
+
+
         jump = Input.GetButtonDown("Jump");
 
         isIdle = !isWalking;
@@ -69,6 +74,12 @@ public class PlayerMovement : MonoBehaviour
         if (jump)
             Jump();
 
+    }
+
+    public Vector3 GetCurrentDirection()
+    {
+
+        return new Vector3(xAxis, 0f, yAxis);
     }
 
     void Move2D()
@@ -86,12 +97,15 @@ public class PlayerMovement : MonoBehaviour
             isWalking = true;
         }
 
-        rb.velocity += new Vector3(xAxis, yAxis, 0f) * accelerationSpeed;
+        rb.velocity += new Vector3(xAxis, 0f, 0f) * accelerationSpeed;
         rb.velocity = new Vector3( Mathf.Clamp(rb.velocity.x, -maxSpeed,maxSpeed),rb.velocity.y,rb.velocity.z);
     }
 
     void MoveTopDown()
     {
+        // if(xAxis <= 0f && yAxis <= 0f)
+        //     return;
+        
         if (xAxis == 0 || yAxis == 0)
         {
             Vector3 finaVelocity;
@@ -100,11 +114,11 @@ public class PlayerMovement : MonoBehaviour
             finaVelocity.z = 0f;
             rb.velocity = finaVelocity;
         }
+        
+         rb.velocity += new Vector3(xAxis, 0f, yAxis) * accelerationSpeed;
+         rb.velocity = new Vector3(Mathf.Clamp(rb.velocity.x, -maxSpeed, maxSpeed), rb.velocity.y, Mathf.Clamp(rb.velocity.z, -maxSpeed, maxSpeed));
 
-        rb.velocity += new Vector3(xAxis, 0f, yAxis) * accelerationSpeed;
-        rb.velocity = new Vector3(Mathf.Clamp(rb.velocity.x, -maxSpeed, maxSpeed), rb.velocity.y, Mathf.Clamp(rb.velocity.z, -maxSpeed, maxSpeed));
-
-        Debug.Log("VEL: " + rb.velocity);
+      
 
     }
 

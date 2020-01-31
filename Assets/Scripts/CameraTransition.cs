@@ -12,22 +12,22 @@ public class CameraTransition : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            StartCoroutine(SideView());
-        }
-        else if (Input.GetKeyDown(KeyCode.S))
-        {
-            StartCoroutine(TopView());
-        }
-        else if (Input.GetKeyDown(KeyCode.D))
-        {
-            StartCoroutine(ThirdPersonView());
-        }
-        else if (Input.GetKeyDown(KeyCode.F))
-        {
-            StartCoroutine(FirstPersonView());
-        }
+        // if (Input.GetKeyDown(KeyCode.A))
+        // {
+        //     StartCoroutine(SideView());
+        // }
+        // else if (Input.GetKeyDown(KeyCode.S))
+        // {
+        //     StartCoroutine(TopView());
+        // }
+        // else if (Input.GetKeyDown(KeyCode.D))
+        // {
+        //     StartCoroutine(ThirdPersonView());
+        // }
+        // else if (Input.GetKeyDown(KeyCode.F))
+        // {
+        //     StartCoroutine(FirstPersonView());
+        // }
     }
 
 
