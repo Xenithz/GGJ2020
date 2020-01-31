@@ -73,8 +73,6 @@ public class PlayerMovement : MonoBehaviour
 
     void Move2D()
     {
-        //rb.constraints = RigidbodyConstraints.FreezePositionZ;
-
         if (xAxis == 0)
         {
             Vector3 finaVelocity;
@@ -88,14 +86,12 @@ public class PlayerMovement : MonoBehaviour
             isWalking = true;
         }
 
-        rb.velocity += new Vector3(xAxis, 0f, 0f) * accelerationSpeed;
-        rb.velocity = new Vector3( Mathf.Clamp(rb.velocity.x, -maxSpeed,maxSpeed),rb.velocity.y,rb.velocity.z);
+        rb.velocity += new Vector3(xAxis, yAxis, 0f) * accelerationSpeed;
+        rb.velocity = new Vector3(Mathf.Clamp(rb.velocity.x, -maxSpeed, maxSpeed), rb.velocity.y, rb.velocity.z);
     }
 
     void MoveTopDown()
     {
-        rb.constraints = RigidbodyConstraints.None;
-
         if (xAxis == 0 || yAxis == 0)
         {
             Vector3 finaVelocity;
@@ -107,39 +103,15 @@ public class PlayerMovement : MonoBehaviour
 
         rb.velocity += new Vector3(xAxis, 0f, yAxis) * accelerationSpeed;
         rb.velocity = new Vector3(Mathf.Clamp(rb.velocity.x, -maxSpeed, maxSpeed), rb.velocity.y, Mathf.Clamp(rb.velocity.z, -maxSpeed, maxSpeed));
-
-        Debug.Log("VEL: " + rb.velocity);
-
     }
 
     void Jump()
     {
-        if(isGrounded)
+        if (isGrounded)
         {
             animator.SetTrigger("Jump");
-            //rb.AddForce(new Vector3(jumpForce.x, jumpForce.y, 0f), ForceMode.Impulse);
-            rb.velocity += new Vector3(jumpForce.x, jumpForce.y, 0f);
-
+            rb.AddForce(new Vector3(jumpForce.x, jumpForce.y, 0f), ForceMode.Impulse);
             Debug.Log("Jump");
         }
     }
-
-    //private void OnCollisionEnter(Collision collision)
-    //{
-    //    if (!isGrounded && collision.collider.CompareTag("Ground"))
-    //    {
-    //        animator.SetBool("Landed", true);
-    //        isGrounded = true;
-    //    }
-    //    else
-    //    {
-    //        animator.SetBool("Landed", false);
-    //    }
-    //}
-
-    //private void OnCollisionExit(Collision collision)
-    //{
-    //    if (collision.collider.CompareTag("Ground"))
-    //        isGrounded = false;
-    //}
 }
