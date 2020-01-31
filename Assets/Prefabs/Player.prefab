@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &993043267
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 993043268}
+  m_Layer: 0
+  m_Name: Front
+  m_TagString: Untagged
+  m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &993043268
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 993043267}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.61918277, y: 1.5976686, z: 0.07420704}
+  m_LocalScale: {x: 0.17113827, y: 0.17113827, z: 0.17113827}
+  m_Children: []
+  m_Father: {fileID: 4875844470228548232}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &355421289478468305
 GameObject:
   m_ObjectHideFlags: 0
@@ -290,6 +320,7 @@ GameObject:
   - component: {fileID: 491119377893020040}
   - component: {fileID: 491119377893020052}
   - component: {fileID: 491119377893020054}
+  - component: {fileID: 1561878381}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -311,6 +342,7 @@ Transform:
   - {fileID: 7436853220318735147}
   - {fileID: 3777484464675357911}
   - {fileID: 491119378373786530}
+  - {fileID: 993043268}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -326,7 +358,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
@@ -374,17 +406,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e433fcf06b26b5541b8ead7346555c2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  accelerationSpeed: 6
+  animator: {fileID: 491119377893020052}
+  audioSource: {fileID: 0}
+  currentDirection: {x: 0, y: 0}
+  footStepAudio:
+  - {fileID: 8300000, guid: 85b8b8c28c5a7e44781e26659b7db30b, type: 3}
+  - {fileID: 8300000, guid: 015b0012669b8ae4ab3770a40f3f259a, type: 3}
+  gravityScale: 8
   groundChecker: {fileID: 491119378373786530}
   groundLayer:
     serializedVersion: 2
     m_Bits: 256
   groundRaycastDistance: 0.2
-  topDown: 1
-  maxSpeed: 6
-  accelerationSpeed: 6
+  jumpClip: {fileID: 8300000, guid: 60be881049ef3fa48a049e9c52a79a2d, type: 3}
   jumpForce: {x: 0, y: 6.5}
-  gravityScale: 8
-  animator: {fileID: 491119377893020052}
+  landClip: {fileID: 8300000, guid: 35eef3fc3ddae1646a203cb1457b2534, type: 3}
+  maxSpeed: 6
+  topDown: 0
+--- !u!114 &1561878381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8498612930190805147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54648e92b37525d449fac6c00ebcc4d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  brokenText: {fileID: 0}
+  playerRigidbody: {fileID: 491119377893020053}
+  brokenTextShoot: {fileID: 0}
+  currentBreakCount: 0
+  maxBreakCount: 6
 --- !u!1 &8674755154869685669
 GameObject:
   m_ObjectHideFlags: 0
@@ -434,7 +490,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d76f3965f5c0c174fb0bc84c489c9039, type: 2}
+  - {fileID: 2100000, guid: eaa01da27e9cd24428e0b3a43038f501, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

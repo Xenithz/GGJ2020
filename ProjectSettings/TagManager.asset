@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Ground
   - Pillar
+  - Broken
   layers:
   - Default
   - TransparentFX

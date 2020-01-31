@@ -1,38 +1,42 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public float accelerationSpeed;
+
+    [Header("Animator Variables")] public Animator animator;
+
+
+    public AudioSource audioSource;
+    public Vector2 currentDirection;
+
+    public AudioClip[] footStepAudio;
+    [SerializeField] private float gravityScale;
     public Transform groundChecker;
     public LayerMask groundLayer;
     public float groundRaycastDistance;
-    public bool topDown = false;
-    public float maxSpeed;
-    public float accelerationSpeed;
-    public Vector2 jumpForce;
-    [SerializeField] private float gravityScale;
-
-    [Header("Animator Variables")]
-    public Animator animator;
+    private bool isGrounded;
     private bool isIdle;
     private bool isWalking;
+    private bool jump;
+    public AudioClip jumpClip;
+    public Vector2 jumpForce;
+    public AudioClip landClip;
+    private bool landed = false;
+    public float maxSpeed;
 
     private Rigidbody rb;
+    public bool topDown;
     private float xAxis;
     private float yAxis;
-    private bool jump;
-    private bool isGrounded;
-    private bool landed = false;
-    public Vector2 currentDirection;
-    void Start()
+
+    private void Start()
     {
         rb = GetComponent<Rigidbody>();
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
-        Debug.Log("Ground: " + isGrounded);
 
         if (topDown)
             MoveTopDown();
@@ -44,7 +48,6 @@ public class PlayerMovement : MonoBehaviour
         rb.velocity = newVelocity;
     }
 
-    
 
     private void Update()
     {
@@ -54,6 +57,7 @@ public class PlayerMovement : MonoBehaviour
         if (isGrounded && !landed)
         {
             animator.SetBool("Landing", true);
+            //Debug.Log("grounded");
         }
         else
             animator.SetBool("Landing", false);
@@ -61,7 +65,6 @@ public class PlayerMovement : MonoBehaviour
 
         xAxis = Input.GetAxisRaw("Horizontal");
         yAxis = Input.GetAxisRaw("Vertical");
-        
 
 
         jump = Input.GetButtonDown("Jump");
@@ -73,16 +76,14 @@ public class PlayerMovement : MonoBehaviour
 
         if (jump)
             Jump();
-
     }
 
     public Vector3 GetCurrentDirection()
     {
-
         return new Vector3(xAxis, 0f, yAxis);
     }
 
-    void Move2D()
+    private void Move2D()
     {
         if (xAxis == 0)
         {
@@ -98,14 +99,14 @@ public class PlayerMovement : MonoBehaviour
         }
 
         rb.velocity += new Vector3(xAxis, 0f, 0f) * accelerationSpeed;
-        rb.velocity = new Vector3( Mathf.Clamp(rb.velocity.x, -maxSpeed,maxSpeed),rb.velocity.y,rb.velocity.z);
+        rb.velocity = new Vector3(Mathf.Clamp(rb.velocity.x, -maxSpeed, maxSpeed), rb.velocity.y, rb.velocity.z);
     }
 
-    void MoveTopDown()
+    private void MoveTopDown()
     {
         // if(xAxis <= 0f && yAxis <= 0f)
         //     return;
-        
+
         if (xAxis == 0 || yAxis == 0)
         {
             Vector3 finaVelocity;
@@ -114,21 +115,20 @@ public class PlayerMovement : MonoBehaviour
             finaVelocity.z = 0f;
             rb.velocity = finaVelocity;
         }
-        
-         rb.velocity += new Vector3(xAxis, 0f, yAxis) * accelerationSpeed;
-         rb.velocity = new Vector3(Mathf.Clamp(rb.velocity.x, -maxSpeed, maxSpeed), rb.velocity.y, Mathf.Clamp(rb.velocity.z, -maxSpeed, maxSpeed));
 
-      
-
+        rb.velocity += new Vector3(xAxis, 0f, yAxis) * accelerationSpeed;
+        rb.velocity = new Vector3(Mathf.Clamp(rb.velocity.x, -maxSpeed, maxSpeed), rb.velocity.y,
+            Mathf.Clamp(rb.velocity.z, -maxSpeed, maxSpeed));
     }
 
-    void Jump()
+    private void Jump()
     {
-        if(isGrounded)
+        if (isGrounded)
         {
             animator.SetTrigger("Jump");
             rb.AddForce(new Vector3(jumpForce.x, jumpForce.y, 0f), ForceMode.Impulse);
             Debug.Log("Jump");
+            audioSource.PlayOneShot(jumpClip);
         }
     }
 
