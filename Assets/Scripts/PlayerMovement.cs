@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -60,7 +61,9 @@ public class PlayerMovement : MonoBehaviour
 
         if (isGrounded && !landed && rb.velocity.y < 0f)
         {
+            landed = true;
             animator.SetBool("Landing", true);
+            audioSource.PlayOneShot(landClip);
             //Debug.Log("grounded");
         }
         else
@@ -129,6 +132,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (isGrounded)
         {
+            landed = false;
             animator.SetTrigger("Jump");
             //rb.AddForce(new Vector3(jumpForce.x, jumpForce.y, 0f), ForceMode.Impulse);
             rb.velocity += new Vector3(jumpForce.x, jumpForce.y, 0f);

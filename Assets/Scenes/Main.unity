@@ -437,6 +437,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 993043268, guid: d06a2e928f4460e469cb519495158129, type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 1561878381, guid: d06a2e928f4460e469cb519495158129, type: 3}
       propertyPath: brokenTextShoot
       value: 
@@ -486,6 +490,11 @@ PrefabInstance:
       propertyPath: landClip
       value: 
       objectReference: {fileID: 8300000, guid: 35eef3fc3ddae1646a203cb1457b2534, type: 3}
+    - target: {fileID: 1190690333810047350, guid: d06a2e928f4460e469cb519495158129,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 4875844470228548232, guid: d06a2e928f4460e469cb519495158129,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -566,8 +575,56 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 491119377893020054, guid: d06a2e928f4460e469cb519495158129, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: d06a2e928f4460e469cb519495158129, type: 3}
+--- !u!4 &945310142 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 491119378373786530, guid: d06a2e928f4460e469cb519495158129,
+    type: 3}
+  m_PrefabInstance: {fileID: 945310141}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &945310143 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8498612930190805147, guid: d06a2e928f4460e469cb519495158129,
+    type: 3}
+  m_PrefabInstance: {fileID: 945310141}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &945310144 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 491119377893020052, guid: d06a2e928f4460e469cb519495158129,
+    type: 3}
+  m_PrefabInstance: {fileID: 945310141}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &945310145
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 945310143}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c7aaeb6c06470e4e94e8a270c8fa2b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  topDown: 0
+  accelerationSpeed: 10
+  maxSpeed: 10
+  jumpForce: {x: 0, y: 10}
+  gravityScale: 5
+  animator: {fileID: 945310144}
+  groundChecker: {fileID: 945310142}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 768
+  groundRaycastDistance: 0.4
+  audioSource: {fileID: 1402896791}
+  footStepAudio:
+  - {fileID: 8300000, guid: 85b8b8c28c5a7e44781e26659b7db30b, type: 3}
+  - {fileID: 8300000, guid: 015b0012669b8ae4ab3770a40f3f259a, type: 3}
+  jumpClip: {fileID: 8300000, guid: 60be881049ef3fa48a049e9c52a79a2d, type: 3}
+  landClip: {fileID: 8300000, guid: 35eef3fc3ddae1646a203cb1457b2534, type: 3}
 --- !u!4 &956809413 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4875844470228548232, guid: d06a2e928f4460e469cb519495158129,
@@ -2000,6 +2057,8 @@ MonoBehaviour:
   textMat: {fileID: 2100000, guid: 4e0db2400fa54d54baf015a9488086ff, type: 2}
   normalFadeTime: 0.2
   perCharacterFadeTime: 0.1
+  onGroundCollisionFade: 1
+  colliders: []
 --- !u!4 &5502247280791319904
 Transform:
   m_ObjectHideFlags: 0

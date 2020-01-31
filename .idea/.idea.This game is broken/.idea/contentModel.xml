@@ -13,7 +13,11 @@
           <e p="BreakingBoundTrigger.cs" t="Include" />
           <e p="BrokenText.cs" t="Include" />
           <e p="CameraTransition.cs" t="Include" />
+          <e p="Checkpoint.cs" t="Include" />
+          <e p="Death.cs" t="Include" />
+          <e p="Fade.cs" t="Include" />
           <e p="FallCounter.cs" t="Include" />
+          <e p="GameManager.cs" t="Include" />
           <e p="GravityActivator.cs" t="Include" />
           <e p="NarrativeText.cs" t="Include" />
           <e p="Pillar.cs" t="Include" />
