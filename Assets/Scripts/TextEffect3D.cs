@@ -4,13 +4,19 @@ using UnityEngine;
 
 public class TextEffect3D : MonoBehaviour
 {
-    [SerializeField]private MeshRenderer[] renderers;
+    [SerializeField] private MeshRenderer[] renderers;
     [SerializeField] private Material textMat;
     [SerializeField] private float normalFadeTime;
     [SerializeField] private float perCharacterFadeTime;
+    [SerializeField] private bool onGroundCollisionFade = true;
     private Coroutine routine;
+    [SerializeField] private List<Collider> colliders;
+    private bool isGrounded = false;
     private void Start()
     {
+        foreach(MeshRenderer rend in renderers)
+            colliders.Add(rend.GetComponent<Collider>());
+
         for (int i = 0; i < renderers.Length; i++)
         {
             Material newMat = new Material(textMat);
@@ -82,8 +88,7 @@ public class TextEffect3D : MonoBehaviour
             yield return null;
         }
         routine = null;
-
-
+        Destroy(gameObject);
     }
     private IEnumerator PerCharacterFadeOutRoutine()
     {
@@ -106,7 +111,7 @@ public class TextEffect3D : MonoBehaviour
 
         }
         routine = null;
-
+        Destroy(gameObject);
 
     }
     private IEnumerator PerCharacterFadeInRoutine()
@@ -132,6 +137,37 @@ public class TextEffect3D : MonoBehaviour
         }
         routine = null;
 
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        {
+            foreach (Collider col in colliders)
+            {
+                Rigidbody rb = col.GetComponent<Rigidbody>();
+                col.enabled = true;
+                rb.constraints = RigidbodyConstraints.None;
+                rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY;
+                Vector3 randomRange = Random.insideUnitSphere * 15f;
+                randomRange.y = randomRange.y < 0 ? -randomRange.y : randomRange.y;
+                randomRange.y *= 0.4f;
+                rb.AddForce(randomRange, ForceMode.Impulse);
+            }
+
+            GetComponent<Collider>().enabled = false;
+
+            NormalFadeOut();
+        }
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        {
+            isGrounded = true;
+        }
     }
 
 }
