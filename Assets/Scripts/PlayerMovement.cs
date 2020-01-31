@@ -2,31 +2,35 @@
 
 public class PlayerMovement : MonoBehaviour
 {
+
+    [Header("Player Settings")]
+    public bool topDown;
     public float accelerationSpeed;
-
-    [Header("Animator Variables")] public Animator animator;
-
-
-    public AudioSource audioSource;
-    public Vector2 currentDirection;
-
-    public AudioClip[] footStepAudio;
+    public float maxSpeed;
+    public Vector2 jumpForce;
     [SerializeField] private float gravityScale;
+
+    [Header("Animator Variables")]
+    public Animator animator;
+
+    [Header("Ground Settings")]
     public Transform groundChecker;
     public LayerMask groundLayer;
     public float groundRaycastDistance;
+
+    [Header("Audio")]
+    public AudioSource audioSource;
+    public AudioClip[] footStepAudio;
+    public AudioClip jumpClip;
+    public AudioClip landClip;
+
     private bool isGrounded;
     private bool isIdle;
     private bool isWalking;
     private bool jump;
-    public AudioClip jumpClip;
-    public Vector2 jumpForce;
-    public AudioClip landClip;
     private bool landed = false;
-    public float maxSpeed;
 
     private Rigidbody rb;
-    public bool topDown;
     private float xAxis;
     private float yAxis;
 
@@ -54,7 +58,7 @@ public class PlayerMovement : MonoBehaviour
         //Debug.DrawRay(groundChecker.position, Vector3.down * groundRaycastDistance, Color.red, 0.3f);
         isGrounded = Physics.Raycast(groundChecker.position, Vector3.down, groundRaycastDistance, groundLayer);
 
-        if (isGrounded && !landed)
+        if (isGrounded && !landed && rb.velocity.y < 0f)
         {
             animator.SetBool("Landing", true);
             //Debug.Log("grounded");
@@ -126,28 +130,9 @@ public class PlayerMovement : MonoBehaviour
         if (isGrounded)
         {
             animator.SetTrigger("Jump");
-            rb.AddForce(new Vector3(jumpForce.x, jumpForce.y, 0f), ForceMode.Impulse);
-            Debug.Log("Jump");
+            //rb.AddForce(new Vector3(jumpForce.x, jumpForce.y, 0f), ForceMode.Impulse);
+            rb.velocity += new Vector3(jumpForce.x, jumpForce.y, 0f);
             audioSource.PlayOneShot(jumpClip);
         }
     }
-
-    //private void OnCollisionEnter(Collision collision)
-    //{
-    //    if (!isGrounded && collision.collider.CompareTag("Ground"))
-    //    {
-    //        animator.SetBool("Landed", true);
-    //        isGrounded = true;
-    //    }
-    //    else
-    //    {
-    //        animator.SetBool("Landed", false);
-    //    }
-    //}
-
-    //private void OnCollisionExit(Collision collision)
-    //{
-    //    if (collision.collider.CompareTag("Ground"))
-    //        isGrounded = false;
-    //}
 }
