@@ -1,0 +1,5 @@
+FOX Timeline 
+
+0-24 - RUN
+45-95 - IDLE
+105-150 -JUMP

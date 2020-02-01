@@ -9,11 +9,12 @@ public class Pillar : MonoBehaviour
     [SerializeField] private float movementSpeed;
     [SerializeField] private PlayerMovement player;
 
-    private bool isOnCollision;
+    [SerializeField]private bool isOnCollision;
     
     // Start is called before the first frame update
     [SerializeField] private float unitsToMove;
     private Coroutine pushRoutine;
+    public AudioClip pushingClip;
     private void Start()
     {
     }
@@ -22,16 +23,21 @@ public class Pillar : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        Debug.Log("Colliding");
-        if (other.transform.CompareTag("Player")&&!isOnCollision)
+        //Debug.Log(other.transform.name);
+        Debug.Log(other.transform.name);
+        if (other.transform.CompareTag("Player") && !isOnCollision)
         {
             isOnCollision = true;
-            Rigidbody rb = other.transform.GetComponent<Rigidbody>();
+
             Vector3 playersDirection = other.transform.GetComponent<PlayerMovement>().GetCurrentDirection();
-            //GetComponent<Rigidbody>().isKinematic = true;
-             StartCoroutine(Push(playersDirection));
-            
+
+            if(playersDirection.magnitude>0)
+            pushRoutine= StartCoroutine(Push(playersDirection));
+            AudioManager.instance.PlayClip(AudioClipReferences.instance.pushingClip, 0f);
+         
+
         }
+        
     }
 
    
@@ -40,12 +46,16 @@ public class Pillar : MonoBehaviour
     {
         Vector3 startPostion = transform.position;
         Vector3 endPosition = startPostion + unitsToMove * directionToMove;
+        Rigidbody rb = GetComponent<Rigidbody>();
+   
         while (Vector3.Distance(transform.position, endPosition) > 0.1f)
         {
-            transform.Translate(directionToMove * (movementSpeed * Time.deltaTime));
+            //rb.velocity += directionToMove * 1.2f;
+            //rb.velocity = Vector3.ClampMagnitude(rb.velocity, 1f);
+            transform.Translate(directionToMove * (movementSpeed * Time.deltaTime),Space.World);
             yield return null;
         }
-
+      
         transform.position = endPosition;
         isOnCollision = false;
 

@@ -1,43 +1,41 @@
-﻿using System.Collections;
+﻿using System;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+
+    [Header("Player Settings")]
+    public bool topDown;
     public float accelerationSpeed;
-
-
-    [Header("Animator Variables")] public Animator animator;
-
-    [Header("Audio")] public AudioSource audioSource;
-
-    public AudioClip[] footStepAudio;
-
-
-    private Coroutine footStepAudioRoutine;
+    public float maxSpeed;
+    public Vector2 jumpForce;
     [SerializeField] private float gravityScale;
 
-    [Header("Ground Settings")] public Transform groundChecker;
+    [Header("Animator Variables")]
+    public Animator animator;
 
+    [Header("Ground Settings")]
+    public Transform groundChecker;
     public LayerMask groundLayer;
     public float groundRaycastDistance;
 
-    private bool isGrounded;
+    [Header("Audio")]
+    public AudioSource audioSource;
+    public AudioClip[] footStepAudio;
+    public AudioClip jumpClip;
+    public AudioClip landClip;
+
+    [SerializeField]private bool isGrounded;
     private bool isIdle;
     private bool isWalking;
     private bool jump;
-    public AudioClip jumpClip;
-    public Vector2 jumpForce;
-    public AudioClip landClip;
-    private bool landed;
-    public float maxSpeed;
+    private bool landed = false;
 
     private Rigidbody rb;
-
-    [Header("Player Settings")] public bool topDown;
-
     private float xAxis;
     private float yAxis;
-
+    public LayerMask pillerLayer;
+    public LayerMask wallLayer;
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -45,10 +43,32 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+
         if (topDown)
             MoveTopDown();
         else
             Move2D();
+        RaycastHit hit;
+        bool pillarFound = false;
+        bool WallFound = false;
+        if (Physics.Raycast(transform.position, GetCurrentDirection(), out hit, 1.5f, pillerLayer))
+        {
+            if (hit.transform.CompareTag("Pillar"))
+                pillarFound = true;
+
+        }
+        if (Physics.Raycast(transform.position, GetCurrentDirection(), out hit, 4f, wallLayer))
+        {
+            if (hit.transform.CompareTag("Wall"))
+                WallFound = true;
+
+        }
+        if (WallFound && pillarFound)
+        {
+
+            xAxis = yAxis = 0f;
+            WallFound = pillarFound = false;
+        }
 
         Vector3 newVelocity = rb.velocity;
         newVelocity.y -= gravityScale * Time.fixedDeltaTime;
@@ -58,27 +78,14 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-#if UNITY_EDITOR
-
-        if (Input.GetKeyDown(KeyCode.LeftShift))
-        {
-            maxSpeed = 50;
-        }
-        else if (Input.GetKeyUp(KeyCode.LeftShift))
-        {
-            maxSpeed = 15;
-        }
-#endif
         //Debug.DrawRay(groundChecker.position, Vector3.down * groundRaycastDistance, Color.red, 0.3f);
         isGrounded = Physics.Raycast(groundChecker.position, Vector3.down, groundRaycastDistance, groundLayer);
 
-        Debug.Log(isGrounded);
-
-
-        if (isGrounded && !landed && rb.velocity.y < 0)
+        if (isGrounded && !landed && rb.velocity.y < 0f)
         {
             landed = true;
             animator.SetBool("Landing", true);
+            audioSource.PlayOneShot(landClip);
             //Debug.Log("grounded");
         }
         else
@@ -87,8 +94,7 @@ public class PlayerMovement : MonoBehaviour
 
         xAxis = Input.GetAxisRaw("Horizontal");
         yAxis = Input.GetAxisRaw("Vertical");
-
-
+       
         jump = Input.GetButtonDown("Jump");
 
         isIdle = !isWalking;
@@ -98,6 +104,10 @@ public class PlayerMovement : MonoBehaviour
 
         if (jump)
             Jump();
+
+       
+
+        
     }
 
     public Vector3 GetCurrentDirection()
@@ -114,34 +124,15 @@ public class PlayerMovement : MonoBehaviour
             finaVelocity.x = 0f;
             rb.velocity = finaVelocity;
             isWalking = false;
-            footStepAudioRoutine = null;
         }
         else
         {
             isWalking = true;
-            if (footStepAudioRoutine == null)
-            {
-                footStepAudioRoutine = StartCoroutine(PlayFootStepSound());
-            }
         }
-
 
         rb.velocity += new Vector3(xAxis, 0f, 0f) * accelerationSpeed;
         rb.velocity = new Vector3(Mathf.Clamp(rb.velocity.x, -maxSpeed, maxSpeed), rb.velocity.y, rb.velocity.z);
     }
-
-
-    private IEnumerator PlayFootStepSound()
-    {
-        while (isWalking)
-        {
-            audioSource.PlayOneShot(footStepAudio[0]);
-            yield return new WaitForSeconds(footStepAudio[0].length + Random.Range(0.4f, 0.5f));
-            audioSource.PlayOneShot(footStepAudio[1]);
-            yield return new WaitForSeconds(footStepAudio[1].length + Random.Range(0.4f, 0.5f));
-        }
-    }
-
 
     private void MoveTopDown()
     {
@@ -173,4 +164,5 @@ public class PlayerMovement : MonoBehaviour
             audioSource.PlayOneShot(jumpClip);
         }
     }
+   
 }

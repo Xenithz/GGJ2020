@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.P))
         {
             SceneManager.LoadScene(0);
         }
@@ -47,7 +47,7 @@ public class GameManager : MonoBehaviour
         //     Fade.instance.FadeOut(1f, 0f);
         // }
     }
-
+    
     private IEnumerator SpawnPlayer(float seconds)
     {
         yield return new WaitForSeconds(seconds);
@@ -62,7 +62,7 @@ public class GameManager : MonoBehaviour
         }
             
     }
-
+    
     public void Death()
     {
         Fade.instance.FadeOut(1f, 0f);
@@ -71,4 +71,5 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(0);
 
     }
+
 }

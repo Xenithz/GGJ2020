@@ -8,6 +8,9 @@ TagManager:
   - Pillar
   - Broken
   - Death
+  - Hand
+  - Wall
+  - NoBoxCollider
   layers:
   - Default
   - TransparentFX
@@ -19,9 +22,9 @@ TagManager:
   - 
   - Ground
   - Problem
-  - 
-  - 
-  - 
+  - WallLayer
+  - PillarLayer
+  - Gameover
   - 
   - 
   - 
