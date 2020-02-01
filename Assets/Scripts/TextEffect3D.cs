@@ -12,6 +12,8 @@ public class TextEffect3D : MonoBehaviour
     private Coroutine routine;
     [SerializeField] private List<Collider> colliders;
     private bool isGrounded = false;
+    
+    
     private void Start()
     {
         foreach(MeshRenderer rend in renderers)

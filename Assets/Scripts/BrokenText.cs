@@ -1,23 +1,43 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BrokenText : MonoBehaviour
 {
-    private HingeJoint hinge;
+    public float timeToLerp = 2f;
+
+
+    private Rigidbody rb;
+
     private void Start()
     {
-        hinge = GetComponent<HingeJoint>();
+        rb = GetComponent<Rigidbody>();
     }
 
-    private void Update()
+
+    public void ScaleText()
     {
-       // transform.eulerAngles = new Vector3(0f,0f,transform.eulerAngles.z);
+        StartCoroutine(ScaleBrokenText());
     }
 
-    public void Break()
+
+    public IEnumerator ScaleBrokenText()
     {
-        hinge.breakForce = 50f;
+        float percCompleted = 0f;
+        float timeSinceStarted = Time.time;
+        float timeRemaining = 0f;
+        var startScale = transform.localScale;
+        var endScale = new Vector3(0.5f, 0.5f, 0.5f);
+
+        while (percCompleted < 1f)
+        {
+            timeRemaining = Time.time - timeSinceStarted;
+            percCompleted = timeRemaining / timeToLerp;
+            transform.localScale = Vector3.Lerp(startScale, endScale, percCompleted);
+            yield return null;
+        }
+
+        rb.isKinematic = true;
+
     }
 }

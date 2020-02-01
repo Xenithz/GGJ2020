@@ -10,7 +10,6 @@
           <e p="Animation Timeline.txt" t="Include" />
         </e>
         <e p="Scripts" t="Include">
-          <e p="BreakingBoundTrigger.cs" t="Include" />
           <e p="BrokenText.cs" t="Include" />
           <e p="CameraTransition.cs" t="Include" />
           <e p="Checkpoint.cs" t="Include" />
@@ -18,14 +17,19 @@
           <e p="Fade.cs" t="Include" />
           <e p="FallCounter.cs" t="Include" />
           <e p="GameManager.cs" t="Include" />
+          <e p="GlowText.cs" t="Include" />
           <e p="GravityActivator.cs" t="Include" />
+          <e p="LandingSound.cs" t="Include" />
+          <e p="LightControls.cs" t="Include" />
           <e p="NarrativeText.cs" t="Include" />
           <e p="Pillar.cs" t="Include" />
           <e p="PlayerMovement.cs" t="Include" />
           <e p="ProblemGenerator.cs" t="Include" />
+          <e p="ProblemText.cs" t="Include" />
           <e p="ShootText.cs" t="Include" />
-          <e p="SwitchCameraToPlayer.cs" t="Include" />
+          <e p="Text5.cs" t="Include" />
           <e p="TextEffect3D.cs" t="Include" />
+          <e p="TriggerEvent.cs" t="Include" />
         </e>
       </e>
       <e p="obj" t="ExcludeRecursive" />

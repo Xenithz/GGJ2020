@@ -16,13 +16,6 @@ public class ShootText : MonoBehaviour
     public void Shoot()
     {
         rigidbody1.isKinematic = false;
-        rigidbody1.AddForce(transform.forward * force ,ForceMode.Impulse);
-        Invoke("MakeTextHeavy",5);
-    }
-
-    void MakeTextHeavy()
-    {
-        rigidbody1.mass = 500;
-        rigidbody1.drag = 55;
+        rigidbody1.AddForce(transform.forward * force, ForceMode.Impulse);
     }
 }

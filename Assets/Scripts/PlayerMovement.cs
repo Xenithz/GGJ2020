@@ -1,37 +1,40 @@
-﻿using System;
+﻿using System.Collections;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-
-    [Header("Player Settings")]
-    public bool topDown;
     public float accelerationSpeed;
-    public float maxSpeed;
-    public Vector2 jumpForce;
+
+
+    [Header("Animator Variables")] public Animator animator;
+
+    [Header("Audio")] public AudioSource audioSource;
+
+    public AudioClip[] footStepAudio;
+
+
+    private Coroutine footStepAudioRoutine;
     [SerializeField] private float gravityScale;
 
-    [Header("Animator Variables")]
-    public Animator animator;
+    [Header("Ground Settings")] public Transform groundChecker;
 
-    [Header("Ground Settings")]
-    public Transform groundChecker;
     public LayerMask groundLayer;
     public float groundRaycastDistance;
-
-    [Header("Audio")]
-    public AudioSource audioSource;
-    public AudioClip[] footStepAudio;
-    public AudioClip jumpClip;
-    public AudioClip landClip;
 
     private bool isGrounded;
     private bool isIdle;
     private bool isWalking;
     private bool jump;
-    private bool landed = false;
+    public AudioClip jumpClip;
+    public Vector2 jumpForce;
+    public AudioClip landClip;
+    private bool landed;
+    public float maxSpeed;
 
     private Rigidbody rb;
+
+    [Header("Player Settings")] public bool topDown;
+
     private float xAxis;
     private float yAxis;
 
@@ -42,7 +45,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-
         if (topDown)
             MoveTopDown();
         else
@@ -56,14 +58,27 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+#if UNITY_EDITOR
+
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            maxSpeed = 50;
+        }
+        else if (Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            maxSpeed = 15;
+        }
+#endif
         //Debug.DrawRay(groundChecker.position, Vector3.down * groundRaycastDistance, Color.red, 0.3f);
         isGrounded = Physics.Raycast(groundChecker.position, Vector3.down, groundRaycastDistance, groundLayer);
 
-        if (isGrounded && !landed && rb.velocity.y < 0f)
+        Debug.Log(isGrounded);
+
+
+        if (isGrounded && !landed && rb.velocity.y < 0)
         {
             landed = true;
             animator.SetBool("Landing", true);
-            audioSource.PlayOneShot(landClip);
             //Debug.Log("grounded");
         }
         else
@@ -99,15 +114,34 @@ public class PlayerMovement : MonoBehaviour
             finaVelocity.x = 0f;
             rb.velocity = finaVelocity;
             isWalking = false;
+            footStepAudioRoutine = null;
         }
         else
         {
             isWalking = true;
+            if (footStepAudioRoutine == null)
+            {
+                footStepAudioRoutine = StartCoroutine(PlayFootStepSound());
+            }
         }
+
 
         rb.velocity += new Vector3(xAxis, 0f, 0f) * accelerationSpeed;
         rb.velocity = new Vector3(Mathf.Clamp(rb.velocity.x, -maxSpeed, maxSpeed), rb.velocity.y, rb.velocity.z);
     }
+
+
+    private IEnumerator PlayFootStepSound()
+    {
+        while (isWalking)
+        {
+            audioSource.PlayOneShot(footStepAudio[0]);
+            yield return new WaitForSeconds(footStepAudio[0].length + Random.Range(0.4f, 0.5f));
+            audioSource.PlayOneShot(footStepAudio[1]);
+            yield return new WaitForSeconds(footStepAudio[1].length + Random.Range(0.4f, 0.5f));
+        }
+    }
+
 
     private void MoveTopDown()
     {
