@@ -25,7 +25,7 @@ public class PlayerMovement : MonoBehaviour
     public AudioClip jumpClip;
     public AudioClip landClip;
 
-    private bool isGrounded;
+    [SerializeField]private bool isGrounded;
     private bool isIdle;
     private bool isWalking;
     private bool jump;
@@ -34,7 +34,8 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody rb;
     private float xAxis;
     private float yAxis;
-
+    public LayerMask pillerLayer;
+    public LayerMask wallLayer;
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -47,6 +48,27 @@ public class PlayerMovement : MonoBehaviour
             MoveTopDown();
         else
             Move2D();
+        RaycastHit hit;
+        bool pillarFound = false;
+        bool WallFound = false;
+        if (Physics.Raycast(transform.position, GetCurrentDirection(), out hit, 1.5f, pillerLayer))
+        {
+            if (hit.transform.CompareTag("Pillar"))
+                pillarFound = true;
+
+        }
+        if (Physics.Raycast(transform.position, GetCurrentDirection(), out hit, 4f, wallLayer))
+        {
+            if (hit.transform.CompareTag("Wall"))
+                WallFound = true;
+
+        }
+        if (WallFound && pillarFound)
+        {
+
+            xAxis = yAxis = 0f;
+            WallFound = pillarFound = false;
+        }
 
         Vector3 newVelocity = rb.velocity;
         newVelocity.y -= gravityScale * Time.fixedDeltaTime;
@@ -72,8 +94,7 @@ public class PlayerMovement : MonoBehaviour
 
         xAxis = Input.GetAxisRaw("Horizontal");
         yAxis = Input.GetAxisRaw("Vertical");
-
-
+       
         jump = Input.GetButtonDown("Jump");
 
         isIdle = !isWalking;
@@ -83,6 +104,10 @@ public class PlayerMovement : MonoBehaviour
 
         if (jump)
             Jump();
+
+       
+
+        
     }
 
     public Vector3 GetCurrentDirection()
@@ -139,4 +164,5 @@ public class PlayerMovement : MonoBehaviour
             audioSource.PlayOneShot(jumpClip);
         }
     }
+   
 }

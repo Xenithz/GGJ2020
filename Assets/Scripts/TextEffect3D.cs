@@ -12,6 +12,8 @@ public class TextEffect3D : MonoBehaviour
     private Coroutine routine;
     [SerializeField] private List<Collider> colliders;
     private bool isGrounded = false;
+    [SerializeField] float initialAlpha = 1;
+    [SerializeField] private bool level1Collision;
     private void Start()
     {
         foreach(MeshRenderer rend in renderers)
@@ -21,6 +23,9 @@ public class TextEffect3D : MonoBehaviour
         {
             Material newMat = new Material(textMat);
             renderers[i].material = newMat;
+            Color color = renderers[i].material.color;
+            color.a = initialAlpha;
+            renderers[i].material.color = color;
         }
 
         //StartCoroutine(NormalFadeIn(5f));
@@ -141,33 +146,69 @@ public class TextEffect3D : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
+
+        if (level1Collision)
         {
-            foreach (Collider col in colliders)
+            if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
             {
-                Rigidbody rb = col.GetComponent<Rigidbody>();
-                col.enabled = true;
-                rb.constraints = RigidbodyConstraints.None;
-                rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY;
-                Vector3 randomRange = Random.insideUnitSphere * 15f;
-                randomRange.y = randomRange.y < 0 ? -randomRange.y : randomRange.y;
-                randomRange.y *= 0.4f;
-                rb.AddForce(randomRange, ForceMode.Impulse);
+                foreach (Collider col in colliders)
+                {
+                    Rigidbody rb = col.GetComponent<Rigidbody>();
+                    col.enabled = true;
+                    rb.constraints = RigidbodyConstraints.None;
+                    rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY;
+                    Vector3 randomRange = Random.insideUnitSphere * 15f;
+                    randomRange.y = randomRange.y < 0 ? -randomRange.y : randomRange.y;
+                    randomRange.y *= 0.4f;
+                    rb.AddForce(randomRange, ForceMode.Impulse);
+                }
+
+                GetComponent<Collider>().enabled = false;
+
+                NormalFadeOut();
             }
-
-            GetComponent<Collider>().enabled = false;
-
-            NormalFadeOut();
         }
-    }
-
-    private void OnCollisionStay(Collision collision)
-    {
-
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        else
         {
-            isGrounded = true;
+            if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
+            {
+                
+                Debug.Log("im hitting");
+
+            }
+        }
+        Debug.Log("im hitting"+collision.transform.name);
+
+
+
+
+
+    }
+    public void SetRigibodiesActive()
+    {
+       
+        for (int i = 0; i < renderers.Length; i++)
+        {
+
+            Vector3 randomRange = Random.insideUnitSphere;
+            Rigidbody rb = renderers[i].transform.GetComponent<Rigidbody>();
+
+            renderers[i].transform.GetComponent<Rigidbody>().isKinematic = false;
+            //rb.AddForce(randomRange * 13f, ForceMode.Impulse);
+        }
+        //Invoke("DisableRigidbodies", 4f);
+
+    }
+    public void DisableRigidbodies()
+    {
+        for (int i = 0; i < renderers.Length; i++)
+        {
+
+            renderers[i].GetComponent<Rigidbody>().isKinematic = true;
+
         }
     }
+
+  
 
 }
