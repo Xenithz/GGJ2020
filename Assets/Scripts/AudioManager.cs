@@ -71,7 +71,11 @@ public class AudioManager : MonoBehaviour
         StartCoroutine(Play(clip,delay));
 
     }
- 
+    public void PlayClip(AudioClip clip, float delay, float volume)
+    {
+        StartCoroutine(Play(clip,delay, volume));
+
+    }
 
     private IEnumerator StopSource(AudioSource source, float delay)
     {
@@ -155,6 +159,44 @@ public class AudioManager : MonoBehaviour
         selectedSource.loop = isLooping;
         if (!waitOnFade)
             selectedSource.Play();
+        else
+            StartCoroutine(FadeInClip(selectedSource));
+        selectedSource.playOnAwake = false;
+      
+    }
+    
+    IEnumerator Play(AudioClip clip, float delay, float volume,bool isLooping = false,bool waitOnFade =false)
+    {
+        yield return new WaitForSeconds(delay);
+        Debug.Log(clip.name + ", " + delay);
+        AudioSource selectedSource=null;
+        foreach (AudioSource source in sources)
+        {
+
+            if(!source.isPlaying&&!waitOnFade)
+            {
+                source.clip = clip;
+                selectedSource = source;
+                break;
+            }
+
+        }
+        if (!selectedSource)
+        {
+            if (sources.Count < maxPoolSize)
+            {
+                selectedSource = CreateSources(sources.Count);
+                selectedSource.clip = clip;
+            }
+            else
+                Debug.Log("Max pool size reached");
+        }
+        selectedSource.loop = isLooping;
+        if (!waitOnFade)
+        {
+            selectedSource.volume = volume;
+            selectedSource.Play();
+        }
         else
             StartCoroutine(FadeInClip(selectedSource));
         selectedSource.playOnAwake = false;

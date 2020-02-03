@@ -4,6 +4,8 @@
     <e p="C:\Users\Aamir\.Rider2019.3\system\extResources" t="IncludeRecursive" />
     <e p="C:\Users\Aamir\.Rider2019.3\system\resharper-host\Local\Transient\ReSharperHost\v193\SolutionCaches\_This game is broken.103781029.00" t="ExcludeRecursive" />
     <e p="D:\Unity Projects\This game is broken" t="IncludeRecursive">
+      <e p="Assembly-CSharp-Editor-firstpass.csproj" t="IncludeRecursive" />
+      <e p="Assembly-CSharp-firstpass.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
         <e p="Models" t="Include">
@@ -14,6 +16,142 @@
         </e>
         <e p="NoCubeFallDetector.cs" t="Include" />
         <e p="OLetterGlow.cs" t="Include" />
+        <e p="Plugins" t="Include">
+          <e p="HoudiniEngineUnity" t="Include">
+            <e p="Editor" t="Include">
+              <e p="HEU_EditorApp.cs" t="Include" />
+              <e p="HEU_EditorMenu.cs" t="Include" />
+              <e p="HEU_EditorStrings.cs" t="Include" />
+              <e p="UI" t="Include">
+                <e p="HEU_CurveUI.cs" t="Include" />
+                <e p="HEU_DragHandleMulti.cs" t="Include" />
+                <e p="HEU_EditorUI.cs" t="Include" />
+                <e p="HEU_GeoSyncUI.cs" t="Include" />
+                <e p="HEU_HandlesUI.cs" t="Include" />
+                <e p="HEU_HoudiniAssetDebugUI.cs" t="Include" />
+                <e p="HEU_HoudiniAssetUI.cs" t="Include" />
+                <e p="HEU_InputNodeUI.cs" t="Include" />
+                <e p="HEU_InstanceInputUI.cs" t="Include" />
+                <e p="HEU_ParameterUI.cs" t="Include" />
+                <e p="HEU_PDGAssetLinkUI.cs" t="Include" />
+                <e p="HEU_SelectionWindow.cs" t="Include" />
+                <e p="HEU_SettingsWindow.cs" t="Include" />
+                <e p="HEU_ShelfToolsWindow.cs" t="Include" />
+                <e p="HEU_ToolsUI.cs" t="Include" />
+              </e>
+            </e>
+            <e p="Scripts" t="Include">
+              <e p="Asset" t="Include">
+                <e p="HEU_AssetEvents.cs" t="Include" />
+                <e p="HEU_AssetPreset.cs" t="Include" />
+                <e p="HEU_AssetUpdater.cs" t="Include" />
+                <e p="HEU_Curve.cs" t="Include" />
+                <e p="HEU_GeneratedOutput.cs" t="Include" />
+                <e p="HEU_GeoNode.cs" t="Include" />
+                <e p="HEU_HoudiniAsset.cs" t="Include" />
+                <e p="HEU_HoudiniAssetRoot.cs" t="Include" />
+                <e p="HEU_InputNode.cs" t="Include" />
+                <e p="HEU_InstanceInputUIState.cs" t="Include" />
+                <e p="HEU_ObjectInstanceInfo.cs" t="Include" />
+                <e p="HEU_ObjectNode.cs" t="Include" />
+                <e p="HEU_PartData.cs" t="Include" />
+              </e>
+              <e p="Attributes" t="Include">
+                <e p="HEU_AttributeData.cs" t="Include" />
+                <e p="HEU_AttributesStore.cs" t="Include" />
+                <e p="HEU_OutputAttribute.cs" t="Include" />
+                <e p="HEU_OutputAttributesStore.cs" t="Include" />
+              </e>
+              <e p="Core" t="Include">
+                <e p="HEU_AssetDatabase.cs" t="Include" />
+                <e p="HEU_Defines.cs" t="Include" />
+                <e p="HEU_HAPIUtility.cs" t="Include" />
+                <e p="HEU_HoudiniEngineError.cs" t="Include" />
+                <e p="HEU_Platform.cs" t="Include" />
+                <e p="HEU_PlatformWin.cs" t="Include" />
+                <e p="HEU_PluginSettings.cs" t="Include" />
+                <e p="HEU_PluginStorage.cs" t="Include" />
+              </e>
+              <e p="Examples" t="Include">
+                <e p="HEU_ExampleEvergreenQuery.cs" t="Include" />
+                <e p="HEU_ExampleInstanceCustomAttribute.cs" t="Include" />
+                <e p="HEU_ScriptCallbackExample.cs" t="Include" />
+                <e p="HEU_ScriptMeshInputUVLayoutExample.cs" t="Include" />
+                <e p="HEU_ScriptParameterExample.cs" t="Include" />
+              </e>
+              <e p="Handles" t="Include">
+                <e p="HEU_Handle.cs" t="Include" />
+                <e p="HEU_HandleParamBinding.cs" t="Include" />
+              </e>
+              <e p="HAPI" t="Include">
+                <e p="HEU_HAPIData.cs" t="Include" />
+                <e p="HEU_HAPIImports.cs" t="Include" />
+                <e p="HEU_HAPIImportsPDG.cs" t="Include" />
+              </e>
+              <e p="HEU_HoudiniVersion.cs" t="Include" />
+              <e p="Parameters" t="Include">
+                <e p="HEU_ParameterData.cs" t="Include" />
+                <e p="HEU_ParameterModifier.cs" t="Include" />
+                <e p="HEU_Parameters.cs" t="Include" />
+                <e p="HEU_ParameterUtility.cs" t="Include" />
+              </e>
+              <e p="PDG" t="Include">
+                <e p="HEU_PDGAssetLink.cs" t="Include" />
+                <e p="HEU_PDGObjects.cs" t="Include" />
+                <e p="HEU_PDGSession.cs" t="Include" />
+              </e>
+              <e p="Render" t="Include">
+                <e p="HEU_MaterialData.cs" t="Include" />
+                <e p="HEU_MaterialFactory.cs" t="Include" />
+                <e p="HEU_UnityMaterialInfo.cs" t="Include" />
+              </e>
+              <e p="Sessions" t="Include">
+                <e p="HEU_SessionBase.cs" t="Include" />
+                <e p="HEU_SessionData.cs" t="Include" />
+                <e p="HEU_SessionHAPI.cs" t="Include" />
+                <e p="HEU_SessionManager.cs" t="Include" />
+                <e p="HEU_SessionPDG.cs" t="Include" />
+              </e>
+              <e p="Tasks" t="Include">
+                <e p="HEU_Task.cs" t="Include" />
+                <e p="HEU_TaskManager.cs" t="Include" />
+                <e p="HEU_ThreadedLoadBuffers.cs" t="Include" />
+                <e p="HEU_ThreadedTask.cs" t="Include" />
+                <e p="HEU_ThreadedTaskLoadGeo.cs" t="Include" />
+                <e p="HEU_ThreadManager.cs" t="Include" />
+              </e>
+              <e p="Tests" t="Include">
+                <e p="HEU_AssetEventReceiverTest.cs" t="Include" />
+              </e>
+              <e p="Utility" t="Include">
+                <e p="HEU_EditorUtility.cs" t="Include" />
+                <e p="HEU_GeneralUtility.cs" t="Include" />
+                <e p="HEU_GenerateGeoCache.cs" t="Include" />
+                <e p="HEU_GeoGroup.cs" t="Include" />
+                <e p="HEU_GeometryUtility.cs" t="Include" />
+                <e p="HEU_GeoSync.cs" t="Include" />
+                <e p="HEU_InputData.cs" t="Include" />
+                <e p="HEU_InputInterface.cs" t="Include" />
+                <e p="HEU_InputInterfaceMesh.cs" t="Include" />
+                <e p="HEU_InputInterfaceTerrain.cs" t="Include" />
+                <e p="HEU_InputMeshUtility.cs" t="Include" />
+                <e p="HEU_InputUtility.cs" t="Include" />
+                <e p="HEU_MeshData.cs" t="Include" />
+                <e p="HEU_MeshIndexFormat.cs" t="Include" />
+                <e p="HEU_SerializableDictionary.cs" t="Include" />
+                <e p="HEU_ShelfTools.cs" t="Include" />
+                <e p="HEU_SimpleJSON.cs" t="Include" />
+                <e p="HEU_SimpleJSONUnity.cs" t="Include" />
+                <e p="HEU_TerrainUtility.cs" t="Include" />
+                <e p="HEU_ToolsInfo.cs" t="Include" />
+                <e p="HEU_VolumeCache.cs" t="Include" />
+              </e>
+            </e>
+            <e p="Shaders" t="Include">
+              <e p="HoudiniSpecularVertexColor.shader" t="Include" />
+            </e>
+          </e>
+        </e>
         <e p="Scripts" t="Include">
           <e p="AudioClipReferences.cs" t="Include" />
           <e p="AudioManager.cs" t="Include" />
@@ -30,6 +168,7 @@
           <e p="GridEntryTrigger.cs" t="Include" />
           <e p="GridFading.cs" t="Include" />
           <e p="LandingSound.cs" t="Include" />
+          <e p="Level1Cleaner.cs" t="Include" />
           <e p="LightControls.cs" t="Include" />
           <e p="NarrativeText.cs" t="Include" />
           <e p="Pillar.cs" t="Include" />
@@ -44,6 +183,7 @@
           <e p="TextEffect3D.cs" t="Include" />
           <e p="TriggerEvent.cs" t="Include" />
         </e>
+        <e p="TimeAnimation.cs" t="Include" />
       </e>
       <e p="obj" t="ExcludeRecursive" />
       <e p="Packages" t="ExcludeRecursive" />

@@ -1,15 +1,15 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using Cinemachine;
 using UnityEngine;
 
 public class CameraTransition : MonoBehaviour
 {
+    public CinemachineCameraOffset cinemachineCameraOffset;
     [SerializeField] private CinemachineFreeLook cinemachineFreeCam;
     [SerializeField] private GameObject front;
-    [SerializeField] private float timeToLerp = 4f;
 
     private PlayerMovement playerMovement;
+    [SerializeField] private float timeToLerp = 4f;
 
     private void Awake()
     {
@@ -38,8 +38,8 @@ public class CameraTransition : MonoBehaviour
         {
             ChangeToThirdPersonView();
         }
-        
-        #if UNITY_EDITOR
+
+#if UNITY_EDITOR
         if (Input.GetKeyDown(KeyCode.PageUp))
         {
             Time.timeScale = 5;
@@ -48,7 +48,7 @@ public class CameraTransition : MonoBehaviour
         {
             Time.timeScale = 1;
         }
-        #endif
+#endif
     }
 
 
@@ -56,7 +56,6 @@ public class CameraTransition : MonoBehaviour
     {
         StartCoroutine(SideView());
         playerMovement.topDown = false;
-
     }
 
     public void ChangeToTopView()
@@ -70,14 +69,12 @@ public class CameraTransition : MonoBehaviour
     {
         StartCoroutine(FirstPersonView());
         playerMovement.topDown = false;
-
     }
 
     public void ChangeToThirdPersonView()
     {
         StartCoroutine(ThirdPersonView());
         playerMovement.topDown = false;
-
     }
 
 
@@ -85,16 +82,22 @@ public class CameraTransition : MonoBehaviour
     {
         cinemachineFreeCam.LookAt = cinemachineFreeCam.Follow;
 
+
+        float startZOffset = cinemachineCameraOffset.m_Offset.z;
+
+
         float endValueY = 1f;
         float endValueX = 0f;
+        float endZOffSet =  5;
+        
 
         float midRigEndRadius = 35f;
         float endMidHeight = 0;
 
-        float topRigEndRadius = 6f;
-        float topHeightEnd = 6f;
+        float topRigEndRadius = 18f;
+        float topHeightEnd = 30f;
 
-        float endFov = 70f;
+        float endFov = 60;
 
         float startValueY = cinemachineFreeCam.m_YAxis.Value;
         float startValueX = cinemachineFreeCam.m_XAxis.Value;
@@ -114,6 +117,9 @@ public class CameraTransition : MonoBehaviour
         {
             timeRemaining = Time.time - timeSinceStarted;
             percCompleted = timeRemaining / timeToLerp;
+            
+            cinemachineCameraOffset.m_Offset.z = Mathf.Lerp(startZOffset, endZOffSet, percCompleted);
+            
             cinemachineFreeCam.m_YAxis.Value = Mathf.Lerp(startValueY, endValueY, percCompleted);
             cinemachineFreeCam.m_XAxis.Value = Mathf.Lerp(startValueX, endValueX, percCompleted);
             cinemachineFreeCam.m_Orbits[0].m_Radius = Mathf.Lerp(startTopRigRadius, topRigEndRadius, percCompleted);

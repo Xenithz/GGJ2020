@@ -8,7 +8,7 @@ public class PillarPivot : MonoBehaviour
     // Start is called before the first frame update
     public bool isFilled;
     public static int score=0;
-
+    
     private void OnDestroy()
     {
         score = 0;
@@ -28,6 +28,7 @@ public class PillarPivot : MonoBehaviour
             if (score >= 9)
             {
                 AudioManager.instance.PlayClip(AudioClipReferences.instance.gridLevelSuccesfulAudio, 2f);
+                GameManager.instance.BringUpPlatform();
                 this.enabled = false;
             }
             Debug.Log(score);

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -10,6 +11,11 @@ public class Platforms : MonoBehaviour
     [SerializeField] private float delayBetweenPlatforms;
 
     public UnityEvent platformEnterEvent;
+
+    private void Start()
+    {
+     
+    }
 
     public void OnPlatFormTrigger()
     {

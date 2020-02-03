@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Level2;
 using UnityEngine.SceneManagement;
 using UnityEngine;
 
@@ -9,7 +10,7 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     private PlayerMovement player;
 
-
+    public Platforms platform;
     private void Awake()
     {
         if (instance == null)
@@ -51,6 +52,7 @@ public class GameManager : MonoBehaviour
     private IEnumerator SpawnPlayer(float seconds)
     {
         yield return new WaitForSeconds(seconds);
+        TextEffect3D.level1Collision = true;
         string lastPoint = PlayerPrefs.GetString("lastCheckpoint");
 
         if (lastPoint == null)
@@ -62,7 +64,13 @@ public class GameManager : MonoBehaviour
         }
             
     }
-    
+
+    public void BringUpPlatform()
+    {
+        
+        platform.platformEnterEvent.Invoke();
+    }
+
     public void Death()
     {
         Fade.instance.FadeOut(1f, 0f);
